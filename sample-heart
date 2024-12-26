@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Heart Symptom Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h2 {
+            color: #333;
+        }
+        .symptom-group {
+            margin-bottom: 20px;
+        }
+        .symptom-group label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        .actions {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Interactive Symptom Checklist for Heart-Related Illnesses</h2>
+        <form id="symptom-form">
+            <div class="symptom-group">
+                <h3>Chest Symptoms</h3>
+                <label><input type="checkbox" name="symptom" value="chest_pain"> Chest pain or discomfort (tightness, pressure, squeezing)</label>
+                <label><input type="checkbox" name="symptom" value="radiating_pain"> Pain radiating to arms, neck, jaw, back, or stomach</label>
+                <label><input type="checkbox" name="symptom" value="chest_heaviness"> Persistent chest heaviness</label>
+            </div>
+
+            <div class="symptom-group">
+                <h3>Breathing Issues</h3>
+                <label><input type="checkbox" name="symptom" value="shortness_breath"> Shortness of breath during activity or rest</label>
+                <label><input type="checkbox" name="symptom" value="trouble_breathing"> Trouble breathing when lying flat</label>
+                <label><input type="checkbox" name="symptom" value="wheezing"> Wheezing or gasping</label>
+            </div>
+
+            <div class="symptom-group">
+                <h3>Heart Rhythm and Palpitations</h3>
+                <label><input type="checkbox" name="symptom" value="rapid_heartbeat"> Rapid heartbeat (palpitations)</label>
+                <label><input type="checkbox" name="symptom" value="irregular_heartbeat"> Irregular heartbeat (skipping beats)</label>
+                <label><input type="checkbox" name="symptom" value="slow_heartbeat"> Slow heartbeat</label>
+            </div>
+
+            <div class="symptom-group">
+                <h3>Fatigue and Weakness</h3>
+                <label><input type="checkbox" name="symptom" value="unusual_tiredness"> Unusual tiredness after minimal exertion</label>
+                <label><input type="checkbox" name="symptom" value="difficulty_concentrating"> Difficulty concentrating or feeling faint</label>
+            </div>
+
+            <div class="symptom-group">
+                <h3>Swelling and Edema</h3>
+                <label><input type="checkbox" name="symptom" value="swelling"> Swelling in legs, ankles, feet, or abdomen</label>
+                <label><input type="checkbox" name="symptom" value="weight_gain"> Sudden weight gain (due to fluid retention)</label>
+            </div>
+
+            <div class="symptom-group">
+                <h3>Other Symptoms</h3>
+                <label><input type="checkbox" name="symptom" value="dizziness"> Dizziness or fainting spells</label>
+                <label><input type="checkbox" name="symptom" value="nausea"> Nausea or vomiting</label>
+                <label><input type="checkbox" name="symptom" value="sweating"> Persistent sweating (cold sweats)</label>
+            </div>
+
+            <div class="actions">
+                <button type="button" onclick="generateResults()">Submit</button>
+            </div>
+        </form>
+
+        <div class="results" id="results" style="display: none;">
+            <h3>Suggested Conditions</h3>
+            <p id="conditions"></p>
+        </div>
+    </div>
+
+    <script>
+        function generateResults() {
+            const symptoms = Array.from(document.querySelectorAll('input[name="symptom"]:checked'))
+                .map(input => input.value);
+
+            const conditions = [];
+
+            if (symptoms.includes('chest_pain') || symptoms.includes('radiating_pain')) {
+                conditions.push("Coronary Artery Disease (CAD): Chest pain, shortness of breath, and fatigue.");
+            }
+            if (symptoms.includes('chest_pain') && symptoms.includes('radiating_pain') && symptoms.includes('sweating')) {
+                conditions.push("Heart Attack (Myocardial Infarction): Severe chest pain, pain radiating to other areas, nausea, and sweating.");
+            }
+            if (symptoms.includes('rapid_heartbeat') || symptoms.includes('irregular_heartbeat')) {
+                conditions.push("Arrhythmias: Irregular or rapid heartbeat, dizziness, fainting.");
+            }
+            if (symptoms.includes('swelling') || symptoms.includes('shortness_breath')) {
+                conditions.push("Heart Failure: Swelling, shortness of breath, persistent fatigue.");
+            }
+
+            const resultsDiv = document.getElementById('results');
+            const conditionsDiv = document.getElementById('conditions');
+
+            if (conditions.length > 0) {
+                conditionsDiv.innerHTML = conditions.join('<br><br>');
+            } else {
+                conditionsDiv.innerHTML = "No significant conditions detected. Consult a healthcare provider for further advice.";
+            }
+
+            resultsDiv.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
